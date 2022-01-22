@@ -28,11 +28,12 @@ void* draw(void* arg)
 	{
 		// move(max_height, max_width - 5);
 		// printw("p:%d", P_list_len(list_first_ptr));
-		usleep(1000 * 100);
+		usleep(1000 * 50);
 		refresh();
 		erase();
 		SIM_update_P_list(list_first_ptr);
 		P_list_draw(list_first_ptr);
+		P_list_add(list_first_ptr, P_new_ptr(water, 40, 0));
 	}
 }
 
@@ -50,11 +51,7 @@ int main()
 	MEVENT event;
 	pthread_t draw_thread;
 
-	if (pthread_create(&draw_thread, NULL, draw, "drawing_thread") != 0)
-	{
-		printw("rendering thread creation error");
-		exit(1);
-	}
+	
 
 	start_color();
 
@@ -62,33 +59,39 @@ int main()
 
 	getmaxyx(stdscr, max_height, max_width); // get the screen size
 
-	list_first_ptr = P_init_list(P_new_ptr(air, 1, 0));
+	list_first_ptr = P_init_list(P_new_ptr(air, -1, -1));
 
 	INP_new(wood, square, 5);
 
-	for (int i = 0; i < max_width + 1; i ++)
-	{
-		P_list_add(list_first_ptr, P_new_ptr(bedrock, i, max_height - 1));
-	}
+	// for (int i = 0; i < max_width + 1; i ++)
+	// {
+	// 	P_list_add(list_first_ptr, P_new_ptr(bedrock, i, max_height - 1));
+	// }
 
-	for(int i = 0; i < 50; i ++)
-	{
-		for (int j = 0; j < 10; j ++)
-		{
-			P_list_add(list_first_ptr, P_new_ptr(wood, 1 + i, j));
-		}
-	} 
+	// for(int i = 0; i < 50; i ++)
+	// {
+	// 	for (int j = 0; j < 10; j ++)
+	// 	{
+	// 		P_list_add(list_first_ptr, P_new_ptr(wood, 1 + i, j));
+	// 	}
+	// } 
 
-	for (int i = 0; i < 20; i ++)
-	{
-		P_list_add(list_first_ptr, P_new_ptr(wood, i + 1, 18));
-	}
+	// for (int i = 0; i < 20; i ++)
+	// {
+	// 	P_list_add(list_first_ptr, P_new_ptr(wood, i + 1, 18));
+	// }
 
-	P_list_replacetypeat(list_first_ptr, 20, 5, fire);
+	// P_list_replacetypeat(list_first_ptr, 20, 5, fire);
 
 	P_list_draw(list_first_ptr);
 	refresh();
 	getch();
+
+	if (pthread_create(&draw_thread, NULL, draw, "drawing_thread") != 0)
+	{
+		printw("rendering thread creation error");
+		exit(1);
+	}
 
 	while (run == TRUE)
 	{
@@ -106,7 +109,7 @@ int main()
 			}
 		}
 		else {
-			INP_handle_key(ch);
+			INP_handle_key(list_first_ptr, ch);
 		}
 	}
 

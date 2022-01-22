@@ -40,6 +40,25 @@ P_ListElement *P_list_add(P_ListElement *first, Particle *to_add)
     return new_element;
 }
 
+BOOL P_list_check_overlapping(P_ListElement *first)
+{
+    P_ListElement *temp1 = first;
+    while (temp1 != NULL)
+    {
+        P_ListElement *temp2 = first;
+        while (temp2 != NULL)
+        {
+            if (V2_cmp_ptr(&temp1->current_element->position, &temp2->current_element->position) && temp1 != temp2)
+            {
+                return TRUE;
+            }
+            temp2 = temp2->next_element;
+        }
+        temp1 = temp1 -> next_element;
+    }
+    return FALSE;
+}
+
 int P_list_free(P_ListElement **firs)
 {
     P_ListElement *first = *firs;

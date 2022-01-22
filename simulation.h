@@ -39,6 +39,10 @@ void update_immobile(Particle *p, P_ListElement *first);
 // update fire particle
 void update_fire(P_ListElement *p, P_ListElement *first);
 
+// general function to check the surrounding area of a position
+// impl: bunch of if statements + P_list_position_occupied()
+vec2 check_for_free_surrounding(P_ListElement *first, int x, int y);
+
 // updates water particle
 // impl: similar to falling particle only it also checks its left and right as well as down left and down
 // right, and goes there if it can

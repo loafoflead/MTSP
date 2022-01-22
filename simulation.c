@@ -175,6 +175,54 @@ BOOL in_bounds(int x, int y)
     }
 }
 
+vec2 check_for_free_surrounding(P_ListElement *first, int x, int y)
+{
+    if (!P_list_position_occupied(first, x, y + 1))
+    {
+        vec2 new = V2_new(x, y + 1);
+        return new;
+    }
+    else if (!P_list_position_occupied(first, x + 1, y + 1))
+    {
+        vec2 new = V2_new(x + 1, y + 1);
+        return new;
+    }
+    else if (!P_list_position_occupied(first, x - 1, y + 1))
+    {
+        vec2 new = V2_new(x - 1, y + 1);
+        return new;
+    }
+    else if (!P_list_position_occupied(first, x + 1, y))
+    {
+        vec2 new = V2_new(x + 1, y);
+        return new;
+    }
+    else if (!P_list_position_occupied(first, x - 1, y))
+    {
+        vec2 new = V2_new(x - 1, y);
+        return new;
+    }
+    else if (!P_list_position_occupied(first, x - 1, y - 1))
+    {
+        vec2 new = V2_new(x - 1, y - 1);
+        return new;
+    }
+    else if (!P_list_position_occupied(first, x + 1, y - 1))
+    {
+        vec2 new = V2_new(x + 1, y - 1);
+        return new;
+    }
+    else if (!P_list_position_occupied(first, x, y - 1))
+    {
+        vec2 new = V2_new(x, y - 1);
+        return new;
+    }
+    else {
+        vec2 new = V2_new(x, y);
+        return new;
+    }
+}
+
 void update_immobile(Particle *p, P_ListElement *first)
 {
 

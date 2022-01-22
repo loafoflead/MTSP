@@ -112,6 +112,13 @@ P_ListElement *P_list_replacetypeat(P_ListElement *first, int x, int y, particle
 // if no resuts are found return false
 BOOL P_list_position_occupied(P_ListElement *first, int x, int y);
 
+// checks every element in the list against every other to check if there are any particles with the same position
+// note: this function is pretty expensive (relatively ofc)
+// impl: makes use of V2_cmp_ptr() (should be safe since we are using absolute variable, i just thought it would
+// be a little faster to not copy the memory each time)
+// + checks every item in list against every other
+BOOL P_list_check_overlapping(P_ListElement *first);
+
 // same as above function, only taking a vec2 as a position instead of x and y coord
 BOOL P_V2_list_position_occupied(P_ListElement *first, vec2 pos);
 

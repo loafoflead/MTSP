@@ -56,7 +56,7 @@ void INP_handle_leftclick(P_ListElement *first, int x, int y)
     }
 }
 
-void INP_handle_key(char ch)
+void INP_handle_key(P_ListElement *first, char ch)
 {
     switch (ch)
     {
@@ -70,6 +70,22 @@ void INP_handle_key(char ch)
         
         case 'w':
             INP_set_spawn_type(water);
+            break;
+
+        case 'p':
+            INP_set_spawn_variant(point);
+            break;
+
+        case 'r':
+            INP_set_spawn_variant(square);
+            break;
+
+        case 'c':
+    		if (P_list_check_overlapping(first))
+            {
+                P_ListElement *ptr;
+                printw("%d", ptr->current_element->position);
+            }
             break;
 
         default:

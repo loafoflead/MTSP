@@ -1,6 +1,30 @@
 #include "vec2.h"
+#include "type.h"
+
 #include <stdlib.h>
 #include <math.h>
+
+BOOL V2_cmp(vec2 one, vec2 two)
+{
+    if (one.x == two.x && one.y == two.y)
+    {
+        return TRUE;
+    }
+    else {
+        return FALSE;
+    }
+}
+
+BOOL V2_cmp_ptr(vec2 *one, vec2 *two)
+{
+    if (one->x == two->x && one->y == two->y)
+    {
+        return TRUE;
+    }
+    else {
+        return FALSE;
+    }
+}
 
 vec2 V2_new(int x, int y)
 {
