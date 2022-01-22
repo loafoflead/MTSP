@@ -23,7 +23,7 @@ P_ListElement *list_first_ptr;
 BOOL run = TRUE;
 
 void* draw(void* arg)
-{
+{ 
 	while (run == TRUE)
 	{
 		// move(max_height, max_width - 5);
