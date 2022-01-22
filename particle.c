@@ -199,13 +199,13 @@ void P_list_delete(P_ListElement *first, P_ListElement **el)
 Particle P_new(particle_types type, int x, int y)
 {
     vec2 position = {x, y};
-    Particle new_pt = {position, '?', type, get_solidity(type), get_lifetime(type)};
+    Particle new_pt = {position, V2F_new(0.0f, 0.0f), type, get_solidity(type), get_lifetime(type), get_mass(type)};
     return new_pt;
 }
 
 Particle P_V2_new(particle_types type, vec2 position)
 {
-    Particle new_pt = {position, '?', type, get_solidity(type), get_lifetime(type)};
+    Particle new_pt = {position,  V2F_new(0.0f, 0.0f), type, get_solidity(type), get_lifetime(type), get_mass(type)};
     return new_pt;
 }
 
@@ -214,9 +214,11 @@ Particle *P_new_ptr(particle_types type, int x, int y)
     vec2 position = {x, y};
     Particle *new_pt_ptr = (Particle*) malloc(sizeof(Particle));
     new_pt_ptr->position = position;
+    new_pt_ptr->velocity =  V2F_new(0.0f, 0.0f);
     new_pt_ptr->solid = get_solidity(type);
     new_pt_ptr->lifetime = get_lifetime(type);
     new_pt_ptr->type = type;
+    new_pt_ptr->mass = get_mass(type);
     return new_pt_ptr;
 }
 
@@ -224,10 +226,39 @@ Particle *P_V2_new_ptr(particle_types type, vec2 pos)
 {
     Particle *new_pt_ptr = (Particle*) malloc(sizeof(Particle));
     new_pt_ptr->position = pos;
+    new_pt_ptr->velocity =  V2F_new(0.0f, 0.0f);
     new_pt_ptr->type = type;
     new_pt_ptr->solid = get_solidity(type);
     new_pt_ptr->lifetime = get_lifetime(type);
+    new_pt_ptr->mass = get_mass(type);
     return new_pt_ptr;
+}
+
+float get_mass(particle_types type)
+{
+    switch (type)
+    {
+        case sand:
+            return 2.0f;
+
+        case wood:
+            return 1.0f;
+
+        case fire:
+            return 0.1f;
+
+        case water:
+            return 0.5f;
+
+        case air:
+            return 0.0f;
+
+        case bedrock:
+            return 10000.0f;
+
+        default:
+            return 1.0f;
+    }
 }
 
 int get_lifetime(particle_types type)

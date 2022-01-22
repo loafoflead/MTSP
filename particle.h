@@ -17,11 +17,12 @@ typedef enum particle_types
 typedef struct
 {
     vec2 position; 
-    char display_character; // the display character (unneccessary?)
+    vec2f velocity; // velocity of particle (default: 0.0)
     particle_types type; // the type of the particle
 
     BOOL solid; // whether or not other particles can ovveride it
     int lifetime; // the number of turns after which it is destroyed, -1 if lives forever
+    float mass; // mass of the object
 
 } Particle;
 

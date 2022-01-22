@@ -4,6 +4,36 @@
 #include <stdlib.h>
 #include <math.h>
 
+vec2f V2F_new(float x, float y)
+{
+    vec2f new = {x, y};
+    return new;
+}
+
+vec2f *V2F_new_ptr(float x, float y)
+{
+    vec2f *new = (vec2f*) malloc(sizeof(vec2f));
+    return new;
+}
+
+BOOL V2F_cmp_ptr(vec2f *one, vec2f *two)
+{
+    if (one->x == two->x && one->y == two->y)
+    {
+        return TRUE;
+    }
+    else {
+        return FALSE;
+    }
+}
+
+float V2F_dist(vec2f A, vec2f B)
+{
+    float dist = sqrtf((B.x - A.x) * (B.x - A.x) + (B.y - A.y) * (B.y - A.y));
+    return dist;
+}
+
+
 BOOL V2_cmp(vec2 one, vec2 two)
 {
     if (one.x == two.x && one.y == two.y)
