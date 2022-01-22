@@ -56,6 +56,27 @@ void INP_handle_leftclick(P_ListElement *first, int x, int y)
     }
 }
 
+void INP_handle_key(char ch)
+{
+    switch (ch)
+    {
+        case 's':
+            INP_set_spawn_type(sand);
+            break;
+
+        case 'f':
+            INP_set_spawn_type(fire);
+            break;
+        
+        case 'w':
+            INP_set_spawn_type(water);
+            break;
+
+        default:
+            break;
+    }
+}
+
 void spawn_square(P_ListElement *first, int x, int y)
 {
     int xmax_index = x + spawn_radius + 1;

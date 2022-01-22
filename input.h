@@ -18,6 +18,9 @@ typedef enum
 // defaults to just adding 
 void INP_handle_leftclick(P_ListElement *first, int x, int y);
 
+// decides what to do with a given keypress
+void INP_handle_key(char ch);
+
 // sets up the variables
 // note: defaults to sand in a point configuration with a radius of one
 void INP_setup();

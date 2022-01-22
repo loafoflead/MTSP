@@ -62,6 +62,7 @@ Particle *P_V2_new_ptr(particle_types type, vec2 pos);
 void P_draw(Particle p);
 
 // same function as above just uses a ptr instead of value
+// note: if a null pointer is given, it returns
 void P_draw_ptr(Particle *p);
 
 // takes an array of particles and array length and draws them all
@@ -104,7 +105,7 @@ void P_list_draw(P_ListElement *first);
 // note: deallocates memory of the particle in element->current_particle and reallocates a new variable using
 // P_new_ptr() function
 // returns: TRUE if a particle gets replaced | FALSE if no particle is found
-BOOL P_list_replacetypeat(P_ListElement *first, int x, int y, particle_types type);
+P_ListElement *P_list_replacetypeat(P_ListElement *first, int x, int y, particle_types type);
 
 // check if a position is occupied by an element in the list 
 // note: runs through every element in the list comparing it to the position,

@@ -25,7 +25,7 @@ P_ListElement *P_list_add(P_ListElement *first, Particle *to_add)
         y = to_add->position.y;
         type = to_add->type;
         free(to_add);
-        P_list_replacetypeat(first, x, y, type);
+        return P_list_replacetypeat(first, x, y, type);
     }
     P_ListElement *next = first; // get the next element in the list
     while (next->next_element != NULL)
@@ -139,7 +139,7 @@ particle_types P_list_typeof_position(P_ListElement *first, int x, int y)
     return air;
 }
 
-BOOL P_list_replacetypeat(P_ListElement *first, int x, int y, particle_types type)
+P_ListElement *P_list_replacetypeat(P_ListElement *first, int x, int y, particle_types type)
 {
     P_ListElement *temp = first;
     while(temp != NULL)
@@ -148,11 +148,11 @@ BOOL P_list_replacetypeat(P_ListElement *first, int x, int y, particle_types typ
         {
             free(temp->current_element);
             temp->current_element = P_new_ptr(type, x, y);
-            return TRUE;
+            return temp;
         }
         temp = temp->next_element;
     }
-    return FALSE;
+    return NULL;
 }
 
 void P_list_delete(P_ListElement *first, P_ListElement **el)
@@ -269,10 +269,10 @@ char get_char_from_particle_type(particle_types type)
             return 'W';
 
         case air:
-            return ' ';
+            return 'A';
 
         default:
-            return '?';
+            return '?'; // this should only happen when given a null type
     }
 }
 
@@ -318,6 +318,10 @@ void P_draw(Particle p)
 
 void P_draw_ptr(Particle *p)
 {
+    if (p == NULL)
+    {
+        return;
+    }
     attron(COLOR_PAIR(get_pair_from_p_type(p->type)));
     BD_draw_point(get_char_from_particle_type(p->type), p->position.x, p->position.y);
     attroff(COLOR_PAIR(get_pair_from_p_type(p->type)));

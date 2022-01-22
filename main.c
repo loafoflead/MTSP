@@ -26,6 +26,8 @@ void* draw(void* arg)
 {
 	while (run == TRUE)
 	{
+		// move(max_height, max_width - 5);
+		// printw("p:%d", P_list_len(list_first_ptr));
 		usleep(1000 * 100);
 		refresh();
 		erase();
@@ -102,6 +104,9 @@ int main()
 					INP_handle_leftclick(list_first_ptr, event.x, event.y);
 				}
 			}
+		}
+		else {
+			INP_handle_key(ch);
 		}
 	}
 

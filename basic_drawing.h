@@ -12,6 +12,7 @@ void BD_draw_circle_highlighted(vec2 center, int radius, char to_put, char highl
 
 // places a point at a given x y pos on the screen
 // implementation: uses ncurses move(y, x) and addch(char) functions
+// note: uses in_bounds() from simulation.h, if out of bounds will return
 void BD_draw_point(char to_draw, int x, int y);
 
 // draws a square, and then uses the index given to get a point on that square

@@ -2,6 +2,7 @@
 #include <stdio.h>
 
 #include "vec2.h"
+#include "simulation.h"
 
 // void BD_draw_cicle(vec2 center, int radius, char to_put)
 // {
@@ -72,6 +73,10 @@ void BD_draw_circle_highlighted(vec2 center, int radius, char to_put, char highl
 
 void BD_draw_point(char to_draw, int x, int y)
 {
+    if (!in_bounds(x, y))
+    {
+        return; // return if out of bounds
+    }
     move(y, x);
     addch(to_draw);
 }
