@@ -78,6 +78,7 @@ P_ListElement* P_init_list(Particle *first);
 
 // adds to a previously created linked list 
 // note: particle given must be malloc()'d 
+// note2: if a particles is added where another particle already exists, it uses the replacetypeat() func instead and free the pointer its given
 P_ListElement* P_list_add(P_ListElement *first, Particle *to_add);
 
 // deletes an element from the list

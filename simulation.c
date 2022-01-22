@@ -6,6 +6,7 @@
 
 #include <stddef.h>
 #include <ncurses.h>
+#include <stdlib.h>
 
 void SIM_update_P_list(P_ListElement *first)
 {
@@ -35,6 +36,7 @@ void update_particle(P_ListElement *p, P_ListElement *first)
 
         case fire:
             // update_falling(p->current_element, first);
+            update_water(p->current_element, first);
             update_fire(p, first);
             break;
 
@@ -96,35 +98,71 @@ void update_fire(P_ListElement *p, P_ListElement *first)
         return;
     }
 
-    if (P_list_typeof_position(first, p->current_element->position.x, p->current_element->position.y + falling_gravity) == wood)
+    for (int i = 0; i < rand() % 4; i ++)
     {
-        P_list_replacetypeat(first, p->current_element->position.x, p->current_element->position.y + falling_gravity, fire);
-    }
-    if (P_list_typeof_position(first, p->current_element->position.x - 1, p->current_element->position.y + falling_gravity) == wood)
-    {
-        P_list_replacetypeat(first, p->current_element->position.x - 1, p->current_element->position.y + falling_gravity, fire);
-    }
-    if (P_list_typeof_position(first, p->current_element->position.x + 1, p->current_element->position.y + falling_gravity) == wood)
-    {
-        P_list_replacetypeat(first, p->current_element->position.x + 1, p->current_element->position.y + falling_gravity, fire);
-    }
+        switch (rand() % 20)
+        {
+            case 0:
+                if (P_list_typeof_position(first, p->current_element->position.x, p->current_element->position.y + falling_gravity) == wood)
+                {
+                    P_list_replacetypeat(first, p->current_element->position.x, p->current_element->position.y + falling_gravity, fire);
+                }
+                break;
 
-    if (P_list_typeof_position(first, p->current_element->position.x - 1, p->current_element->position.y) == wood)
-    {
-        P_list_replacetypeat(first, p->current_element->position.x - 1, p->current_element->position.y, fire);
+            case 1:
+                if (P_list_typeof_position(first, p->current_element->position.x - 1, p->current_element->position.y + falling_gravity) == wood)
+                {
+                    P_list_replacetypeat(first, p->current_element->position.x - 1, p->current_element->position.y + falling_gravity, fire);
+                }
+                break;
+
+            case 2:
+                if (P_list_typeof_position(first, p->current_element->position.x + 1, p->current_element->position.y + falling_gravity) == wood)
+                {
+                    P_list_replacetypeat(first, p->current_element->position.x + 1, p->current_element->position.y + falling_gravity, fire);
+                }
+                break;
+
+            case 3:
+                if (P_list_typeof_position(first, p->current_element->position.x - 1, p->current_element->position.y) == wood)
+                {
+                    P_list_replacetypeat(first, p->current_element->position.x - 1, p->current_element->position.y, fire);
+                }
+                break;
+
+            case 4:
+                if (P_list_typeof_position(first, p->current_element->position.x + 1, p->current_element->position.y) == wood)
+                {
+                    P_list_replacetypeat(first, p->current_element->position.x + 1, p->current_element->position.y, fire);
+                }
+                break;
+
+            case 5:
+                if (P_list_typeof_position(first, p->current_element->position.x - 1, p->current_element->position.y - 1) == wood)
+                {
+                    P_list_replacetypeat(first, p->current_element->position.x - 1, p->current_element->position.y - 1, fire);
+                }
+                break;
+
+            case 6:
+                if (P_list_typeof_position(first, p->current_element->position.x + 1, p->current_element->position.y - 1) == wood)
+                {
+                    P_list_replacetypeat(first, p->current_element->position.x + 1, p->current_element->position.y - 1, fire);
+                }
+                break;
+
+            case 7:
+                if (P_list_typeof_position(first, p->current_element->position.x, p->current_element->position.y - 1) == wood)
+                {
+                    P_list_replacetypeat(first, p->current_element->position.x, p->current_element->position.y - 1, fire);
+                }
+                break;
+
+            default:
+                break;
+        }
     }
-    if (P_list_typeof_position(first, p->current_element->position.x + 1, p->current_element->position.y) == wood)
-    {
-        P_list_replacetypeat(first, p->current_element->position.x + 1, p->current_element->position.y, fire);
-    }
-    if (P_list_typeof_position(first, p->current_element->position.x - 1, p->current_element->position.y - 1) == wood)
-    {
-        P_list_replacetypeat(first, p->current_element->position.x - 1, p->current_element->position.y - 1, fire);
-    }
-    if (P_list_typeof_position(first, p->current_element->position.x + 1, p->current_element->position.y - 1) == wood)
-    {
-        P_list_replacetypeat(first, p->current_element->position.x + 1, p->current_element->position.y - 1, fire);
-    }
+ 
     p->current_element->lifetime --;
 }
 

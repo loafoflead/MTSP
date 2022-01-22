@@ -17,6 +17,16 @@ P_ListElement* P_init_list(Particle *first)
 
 P_ListElement *P_list_add(P_ListElement *first, Particle *to_add)
 {
+    if (P_V2_list_position_occupied(first, to_add->position)) // if the position is occupied, simply replace it with the new type
+    {
+        int x, y;
+        particle_types type;
+        x = to_add->position.x;
+        y = to_add->position.y;
+        type = to_add->type;
+        free(to_add);
+        P_list_replacetypeat(first, x, y, type);
+    }
     P_ListElement *next = first; // get the next element in the list
     while (next->next_element != NULL)
     {
@@ -276,6 +286,15 @@ int get_pair_from_p_type(particle_types type)
         case sand:
             return 2;
 
+        case fire:
+            return 3;
+
+        case wood:
+            return 4;
+        
+        case bedrock:
+            return 5;
+
         default:
             return 0;
     }
@@ -285,6 +304,9 @@ void P_create_colour_pairs()
 {
     init_pair(1, COLOR_BLUE, COLOR_BLUE); // water colour
     init_pair(2, COLOR_YELLOW, COLOR_YELLOW); // sand
+    init_pair(3, COLOR_RED, COLOR_RED); // fire
+    init_pair(4, COLOR_WHITE, COLOR_BLACK); // wood
+    init_pair(5, COLOR_BLACK, COLOR_WHITE); // bedrock
 }
 
 void P_draw(Particle p)
