@@ -33,6 +33,36 @@ float V2F_dist(vec2f A, vec2f B)
     return dist;
 }
 
+vec2f V2F_add(vec2f A, vec2f B)
+{
+		vec2f new = {A.x + B.x, A.y + B.y};
+		return new;
+}
+
+vec2f V2F_zero()
+{
+		vec2f new = {0,0};
+		return new;
+}
+
+vec2 V2_add(vec2 A, vec2 B)
+{
+		vec2 new = {A.x + B.x, A.y + B.y};
+		return new;
+}
+
+vec2f V2F_fromv2(vec2 vec)
+{
+		vec2f new = {vec.x, vec.y};
+		return new;
+}
+
+vec2 V2_fromf(vec2f vecf)
+{
+		vec2 new = {(int) vecf.x, (int) vecf.y};
+		return new;
+}
+
 
 BOOL V2_cmp(vec2 one, vec2 two)
 {

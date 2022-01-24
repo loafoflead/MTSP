@@ -71,6 +71,10 @@ void INP_handle_key(P_ListElement *first, char ch)
         case 'w':
             INP_set_spawn_type(water);
             break;
+            
+        case 'o':
+			INP_set_spawn_type(wood);
+			break;
 
         case 'p':
             INP_set_spawn_variant(point);

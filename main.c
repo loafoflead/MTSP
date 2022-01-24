@@ -14,6 +14,7 @@
 #include "vec2.h"
 #include "particle.h"
 #include "simulation.h"
+#include "better_simulation.h"
 #include "input.h"
 
 extern int max_height, max_width; // screen size dimensions
@@ -26,14 +27,15 @@ void* draw(void* arg)
 { 
 	while (run == TRUE)
 	{
-		// move(max_height, max_width - 5);
-		// printw("p:%d", P_list_len(list_first_ptr));
+		move(max_height, max_width - 5);
+		printw("p:%d", P_list_len(list_first_ptr));
 		usleep(1000 * 50);
 		refresh();
 		erase();
-		SIM_update_P_list(list_first_ptr);
+		BSIM_update_P_list(list_first_ptr);
 		P_list_draw(list_first_ptr);
 		P_list_add(list_first_ptr, P_new_ptr(water, 40, 0));
+		P_list_remove_out_of_bounds(list_first_ptr);
 	}
 }
 
@@ -44,6 +46,11 @@ int main()
 	noecho();  // dont print what the user types
 	cbreak(); // prevent linefeed?
 	// raw(); // prevent cntrl+c quit
+	
+	if (curs_set(0) == ERR)
+	{
+		printw("[NON FATAL] Error setting the cursor invisible");
+	}
 
 	mousemask(  ALL_MOUSE_EVENTS, NULL);
 	keypad(stdscr, TRUE); // magically makes the mouse input work :)
@@ -61,12 +68,12 @@ int main()
 
 	list_first_ptr = P_init_list(P_new_ptr(air, -1, -1));
 
-	INP_new(wood, square, 5);
+	INP_new(wood, square, 20);
 
-	// for (int i = 0; i < max_width + 1; i ++)
-	// {
-	// 	P_list_add(list_first_ptr, P_new_ptr(bedrock, i, max_height - 1));
-	// }
+	for (int i = 0; i < max_width + 1; i ++)
+	{
+		P_list_add(list_first_ptr, P_new_ptr(bedrock, i, max_height - 1));
+	}
 
 	// for(int i = 0; i < 50; i ++)
 	// {
@@ -102,7 +109,7 @@ int main()
 			// printw("h");
 			if (getmouse(&event) == OK)
 			{
-				if (event.bstate & BUTTON1_PRESSED)
+				if (event.bstate & BUTTON1_CLICKED)
 				{
 					INP_handle_leftclick(list_first_ptr, event.x, event.y);
 				}
@@ -116,6 +123,8 @@ int main()
 	P_list_free(&list_first_ptr); // free particle list
 
 	move (0, 0);
+	
+	curs_set(1);
 
 	getch(); // any key to quit
 	endwin(); // free memory

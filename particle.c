@@ -1,8 +1,9 @@
-#include "particle.h"
-#include "vec2.h"
-#include "basic_drawing.h"
+#include "particle.h" // header file
+#include "vec2.h" // vec2s
+#include "basic_drawing.h" // idk why this is here
 
-#include "type.h"
+#include "type.h" // bool type
+#include "better_simulation.h" // to access BSIM_in_bounds() method
 
 #include <ncurses.h>
 #include <stdlib.h>
@@ -158,7 +159,26 @@ particle_types P_list_typeof_position(P_ListElement *first, int x, int y)
     return air;
 }
 
-BOOL P_list_solidityof_position(P_ListElement *first, int x, int y)
+int P_list_remove_out_of_bounds(P_ListElement *first)
+{
+	P_ListElement *temp = first;
+	int deleted = 0;
+	while (temp != NULL)
+	{
+		if (BSIM_in_bounds(temp->current_element->position.x, temp->current_element->position.y) == FALSE)
+        {
+			P_ListElement *next_ref = temp->next_element;
+			P_list_delete(first, &temp);
+			deleted ++;
+			temp = next_ref; // iterate
+			continue;
+        }
+        temp = temp->next_element; // iterate
+	}
+	return deleted; // return the amount of list elements removed
+}
+
+int P_list_solidityof_position(P_ListElement *first, int x, int y)
 {
     P_ListElement *temp = first;
     while(temp != NULL)
@@ -169,7 +189,7 @@ BOOL P_list_solidityof_position(P_ListElement *first, int x, int y)
         }
         temp = temp->next_element;
     }
-    return FALSE;
+    return 0;
 }
 
 P_ListElement *P_list_replacetypeat(P_ListElement *first, int x, int y, particle_types type)
@@ -294,22 +314,26 @@ int get_lifetime(particle_types type)
     }
 }
 
-BOOL get_solidity(particle_types type)
+int get_solidity(particle_types type)
 {
     switch(type)
     {
         case sand:
         case wood:
+            return 3;
+            
         case bedrock:
-        case water:
-            return TRUE;
+			return 4;
 
+		case water:
+			return 2;
         case fire:
+			return 0;
         case air:
-            return FALSE;
+            return 0;
 
         default:
-            return TRUE;
+            return 0;
     }
 }
 

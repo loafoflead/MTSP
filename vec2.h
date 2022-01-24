@@ -30,6 +30,24 @@ vec2* V2_new_ptr(int x, int y);
 // same as above but returns copy to a chunk of memory
 vec2f V2F_new(float x, float y);
 
+// new vec2f initialised to 0
+vec2f V2F_zero();
+
+// add two vec2fs
+vec2f V2F_add(vec2f A, vec2f B);
+
+// add two vec2
+// note: creates a new variable
+vec2 V2_add(vec2 A, vec2 B);
+
+// turn a vec2f into a vec2
+// note: creates a new variable
+vec2 V2_fromf(vec2f vecf);
+
+// turn a vec2 into a vec2f
+// note: creates a new variable
+vec2f V2F_fromv2(vec2 vec);
+
 // compare two vec2fs (if equal: TRUE, else: FALSE)
 BOOL V2F_cmp_ptr(vec2f *one, vec2f *two);
 

@@ -20,7 +20,7 @@ typedef struct
     vec2f velocity; // velocity of particle (default: 0.0)
     particle_types type; // the type of the particle
 
-    BOOL solid; // whether or not other particles can ovveride it
+    int solid; // whether or not other particles can ovveride it
     int lifetime; // the number of turns after which it is destroyed, -1 if lives forever
     float mass; // mass of the object
 
@@ -87,6 +87,10 @@ P_ListElement* P_list_add(P_ListElement *first, Particle *to_add);
 // note: uses free(), don't use this on an empty block of memory
 void P_list_delete(P_ListElement *first, P_ListElement **el);
 
+// check through the list for out of bounds elements and remove them
+// returns: the count of elements removed
+int P_list_remove_out_of_bounds(P_ListElement *first);
+
 // frees a linked list (hopefully)
 // note: uses free() function, this is why all ptrs to particles must be malloc()'d
 int P_list_free(P_ListElement **first);
@@ -129,7 +133,7 @@ particle_types P_list_typeof_position(P_ListElement *first, int x, int y);
 
 // gets the solidity of a particle at a specific position
 // returns TRUE if solid, FALSE if not (or no particle can be found)
-BOOL P_list_solidityof_position(P_ListElement *first, int x, int y);
+int P_list_solidityof_position(P_ListElement *first, int x, int y);
 
 ////////////////////////////////////////////////////////////////:
 // INTERIOR MECHANICS 
@@ -143,7 +147,7 @@ char get_char_from_particle_type(particle_types type);
 float get_mass(particle_types type);
 
 // get whether or not a particle is solid based on it's type
-BOOL get_solidity(particle_types type);
+int get_solidity(particle_types type);
 
 // get the lifetime value of a particle based on it's type
 int get_lifetime(particle_types type);
