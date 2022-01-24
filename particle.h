@@ -127,6 +127,10 @@ BOOL P_V2_list_position_occupied(P_ListElement *first, vec2 pos);
 // note: returns particle_type.air when there are no particles at the given position
 particle_types P_list_typeof_position(P_ListElement *first, int x, int y);
 
+// gets the solidity of a particle at a specific position
+// returns TRUE if solid, FALSE if not (or no particle can be found)
+BOOL P_list_solidityof_position(P_ListElement *first, int x, int y);
+
 ////////////////////////////////////////////////////////////////:
 // INTERIOR MECHANICS 
 ////////////////////////////////////////////////////////////////:
@@ -134,6 +138,9 @@ particle_types P_list_typeof_position(P_ListElement *first, int x, int y);
 // returns the appropriate character from the particle type given
 // note: returns '?' if the character isn't known (maybe it should use the char in the struct but i might just remove)
 char get_char_from_particle_type(particle_types type);
+
+// get the given mass of a particle based (cringe) on its type
+float get_mass(particle_types type);
 
 // get whether or not a particle is solid based on it's type
 BOOL get_solidity(particle_types type);

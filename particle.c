@@ -158,6 +158,20 @@ particle_types P_list_typeof_position(P_ListElement *first, int x, int y)
     return air;
 }
 
+BOOL P_list_solidityof_position(P_ListElement *first, int x, int y)
+{
+    P_ListElement *temp = first;
+    while(temp != NULL)
+    {
+        if (temp->current_element->position.x == x && temp->current_element->position.y == y)
+        {
+            return temp->current_element->solid;
+        }
+        temp = temp->next_element;
+    }
+    return FALSE;
+}
+
 P_ListElement *P_list_replacetypeat(P_ListElement *first, int x, int y, particle_types type)
 {
     P_ListElement *temp = first;
