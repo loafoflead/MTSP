@@ -196,12 +196,58 @@ void BSIM_update_water(Particle *p, P_ListElement *first)
 {
     p->velocity = V2F_add(p->velocity, V2F_new(0, gravity)); // accelerate with gravity 
     vec2f next_position = V2F_add(V2F_fromv2(p->position), p->velocity); // get the position of the particle plus its velocity
+
     int xNew, yNew;
-    V2_store(V2_fromf(next_position), &x, &y);
-    for (int x = p->position.x; x < xNew; if (x < xNew) x ++ else x --)
+    V2_store(V2_fromf(next_position), &xNew, &yNew); // values for ease of use
+
+    vec2 updated_position = p->position; // the position the particle is gonna end up at
+
+    // note: i cant fucking beleive this code block works lmao
+    for ( 
+        int x = p->position.x, y = p->position.y; // get x and y variables
+        x != xNew, y != yNew; // while neither of them are equal to their respective new positions
+        (x < xNew) ? x ++ : x --, // increment x appropriately with its value
+        (y < yNew) ? y ++ : y -- // increment y appropriately with its value
+    ) // iterate along the new position 
     {
-        
+        updated_position.x = x;
+        updated_position.y = y; // get next position
+
+        if (V2_can_move(first, updated_position, p->solid)) // straight down
+        {
+            continue;
+        }
+        else if (V2_can_move(first, V2_add(updated_position, V2_new(1, 0)), p->solid)) // to the right-down
+        {
+            xNew ++; // go another square to the left
+            continue;
+        }
+        else if (V2_can_move(first, V2_add(updated_position, V2_new(-1, 0)), p->solid)) // to the left-down
+        {
+            xNew --; // go another square to the left
+            continue;
+        }
+        else if (V2_can_move(first, V2_add(updated_position, V2_new(-1, -1)), p->solid)) // to the left
+        {
+            xNew --; // go another square to the left
+            yNew --;
+            y --; // also have to decrement y
+            continue;
+        }
+        else if (V2_can_move(first, V2_add(updated_position, V2_new(1, -1)), p->solid)) // to the right
+        {
+            xNew ++; // go another square to the left
+            yNew --;
+            y --; // also have to decrement y
+            continue;
+        }
+        else { // no free spots
+            updated_position.x --;
+            updated_position.y --; // go back a spot (tbs) ((to be safe))
+            break;
+        }
     }
+    p->position = updated_position; // put the particle in the new pos
 }
 
 void BSIM_update_immobile(Particle *p, P_ListElement *first)
