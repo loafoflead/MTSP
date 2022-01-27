@@ -55,7 +55,7 @@ BOOL BSIM_in_bounds(int x, int y)
     }
 }
 
-vec2 BSIM_can_move(P_ListElement *first, vec2 pos, MoveVariants var, BOOL my_solidity)
+vec2 BSIM_can_move(P_ListElement *first, vec2 pos, MoveVariants var, int my_solidity)
 {
     int x, y;
     x = pos.x;
@@ -194,7 +194,14 @@ vec2 BSIM_can_move(P_ListElement *first, vec2 pos, MoveVariants var, BOOL my_sol
 
 void BSIM_update_water(Particle *p, P_ListElement *first)
 {
-	
+    p->velocity = V2F_add(p->velocity, V2F_new(0, gravity)); // accelerate with gravity 
+    vec2f next_position = V2F_add(V2F_fromv2(p->position), p->velocity); // get the position of the particle plus its velocity
+    int xNew, yNew;
+    V2_store(V2_fromf(next_position), &x, &y);
+    for (int x = p->position.x; x < xNew; if (x < xNew) x ++ else x --)
+    {
+        
+    }
 }
 
 void BSIM_update_immobile(Particle *p, P_ListElement *first)
@@ -285,7 +292,7 @@ void BSIM_update_falling(Particle *p, P_ListElement *first)
 	p->velocity = V2F_add(p->velocity, V2F_new(0, gravity)); // change the velocity of the particle
 	vec2f new_position = V2F_add(p->velocity, V2F_fromv2(p->position)); // calculate new position
 	vec2 next_position = V2_fromf(new_position); // get the next grid aligned position
-	BOOL solidity = p->solid; // the solidity of the particle
+	int solidity = p->solid; // the solidity of the particle
 	for (int i = p->position.y; i < next_position.y; i ++)
 	{
 		vec2 next_pos = V2_add(p->position, V2_new(0, 1));
@@ -310,7 +317,7 @@ void BSIM_update_falling(Particle *p, P_ListElement *first)
 	}
 }
 
-BOOL V2_can_move(P_ListElement *first, vec2 pos, BOOL solidity)
+BOOL V2_can_move(P_ListElement *first, vec2 pos, int solidity)
 {
 	if (P_list_typeof_position(first, pos.x, pos.y) == air && P_list_solidityof_position(first, pos.x, pos.y) < solidity)
 	{
@@ -319,7 +326,7 @@ BOOL V2_can_move(P_ListElement *first, vec2 pos, BOOL solidity)
 	return FALSE;
 }
 
-BOOL can_move(P_ListElement *first, int x, int y, BOOL solidity)
+BOOL can_move(P_ListElement *first, int x, int y, int solidity)
 {
 	if (P_list_typeof_position(first, x, y) == air && P_list_solidityof_position(first, x, y) < solidity)
 	{

@@ -44,12 +44,12 @@ void BSIM_update_water(Particle *p, P_ListElement *first);
 // take a center position and check the positions around it in the given configuration and either checking 
 // or ignoring solidity. 
 // note: if no free spot if found will return the origin point
-vec2 BSIM_can_move(P_ListElement *first, vec2 pos, MoveVariants var, BOOL my_solidity);
+vec2 BSIM_can_move(P_ListElement *first, vec2 pos, MoveVariants var, int my_solidity);
 
 // check if a position is valid for a given solidity
-BOOL V2_can_move(P_ListElement *first, vec2 pos, BOOL solidity);
+BOOL V2_can_move(P_ListElement *first, vec2 pos, int solidity);
 
 // check if an xy coordinate is valid for a given solidity
-BOOL can_move(P_ListElement *first, int x, int y, BOOL solidity);
+BOOL can_move(P_ListElement *first, int x, int y, int solidity);
 
 #endif

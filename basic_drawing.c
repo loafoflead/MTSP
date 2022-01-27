@@ -4,33 +4,6 @@
 #include "vec2.h"
 #include "simulation.h"
 
-// void BD_draw_cicle(vec2 center, int radius, char to_put)
-// {
-//     int N = 2 * radius + 1; // square that encompasses the circle (diameter plus one for some reason)
-
-//     int x,y;
-
-//     for (int i = center.x; i < N; i ++)
-//     {
-//         for (int j = center.y; j < N; j ++)
-//         {
-//             x = i - radius; 
-//             y = j - radius; // start from the top left corner
-
-//             if ( (x * x) + (y * y) <= (radius*radius) + 1 ) // if the point is in the circle, place it and advance the cursor
-//             {
-//                 addch(to_put); 
-//             }
-//             else // if not, simply advance the cursor
-//             {
-//                 addch(' ');
-//             }
-//             addch(' ');
-//         }
-//         addch('\n'); // newline when reaching new row (column?)
-//     }
-// }
-
 void BD_draw_circle(vec2 center, int radius, char to_put)
 {
     int max_index = center.x + radius + 1; // get the maxiumum radius of the square

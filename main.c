@@ -68,7 +68,7 @@ int main()
 
 	list_first_ptr = P_init_list(P_new_ptr(air, -1, -1));
 
-	INP_new(wood, square, 20);
+	INP_new(wood, square, 8);
 
 	for (int i = 0; i < max_width + 1; i ++)
 	{

@@ -10,6 +10,12 @@ vec2f V2F_new(float x, float y)
     return new;
 }
 
+void V2F_store(vec2f vec, float *x, float *y)
+{
+    *x = vec.x;
+    *y = vec.y;
+}
+
 vec2f *V2F_new_ptr(float x, float y)
 {
     vec2f *new = (vec2f*) malloc(sizeof(vec2f));
@@ -90,6 +96,12 @@ vec2 V2_new(int x, int y)
 {
     vec2 new_vec = {x, y};
     return new_vec;
+}
+
+void V2_store(vec2 vec, int *x, int *y)
+{
+    *x = vec.x;
+    *y = vec.y;
 }
 
 vec2* V2_new_ptr(int x, int y)
